@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Playlist {
     List<Song> playlist;
     private String playlistName;
+
     public static List<Playlist> listOfPlaylists = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
@@ -14,8 +15,13 @@ public class Playlist {
         listOfPlaylists.add(this);
     }
 
+
     public void addSong(Song song) {
         playlist.add(song);
+    }
+
+    public void deleteSong(Song song) {
+        playlist.remove(song);
     }
 
     public void removeSong(String artistName, String songTitle) {
@@ -32,14 +38,17 @@ public class Playlist {
         System.out.println("B: Create a new playlist");
         System.out.println("C: Delete a playlist");
         System.out.println("D: View a playlist");
-        System.out.println("E: Return to the main menu");
+        System.out.println("E: Add a song to your playlist");
+        System.out.println("F: Remove a song from your playlist");
 
         String userChoice = scanner.nextLine();
 
         if (userChoice.equalsIgnoreCase("A")) {
-            System.out.println("Which playlist would you like to view? ");
+            System.out.println("Which playlist would you like to view? Enter a number");
             // Display names of all current playlists. The main playlist should still display even if user has not created any playlists
-            String playlistToView = scanner.nextLine();
+            printPlaylists();
+            int playlistToView = Integer.valueOf(scanner.nextLine());
+            printSongsInPlaylist(listOfPlaylists.get(playlistToView - 1));
             // Make sure
             // Display all the songs in that playlist, plus a number for each song so users can easily choose them
         } else if (userChoice.equalsIgnoreCase("B")) {
@@ -47,14 +56,18 @@ public class Playlist {
             String nameOfNewPlaylist = scanner.nextLine();
             Playlist newPlaylist = new Playlist(nameOfNewPlaylist);
 
-
         } else if (userChoice.equalsIgnoreCase("C")) {
+            System.out.println("Which playlist would you like to delete? ");
+            printPlaylists();
+            int playlistToRemove = Integer.valueOf(scanner.nextLine());
+            listOfPlaylists.remove(playlistToRemove - 1);
 
         } else if (userChoice.equalsIgnoreCase("D")) {
             System.out.println("Choose the number of the playlist you would like to view: ");
             printPlaylists();
             int playlistToView = Integer.valueOf(scanner.nextLine());
             printSongsInPlaylist(listOfPlaylists.get(playlistToView - 1));
+
         } else if (userChoice.equalsIgnoreCase("E")) {
             System.out.println("Which playlist would you like to add songs to? ");
             printPlaylists();
@@ -67,6 +80,17 @@ public class Playlist {
 
             chosenPlaylist.addSong(mainPlaylist.playlist.get(songToAdd - 1)); // Need to grab the song
             //Song chosenSong = listOfPlaylists.get(playlistToAddSongsTo - 1).playlist.get(1);
+
+        } else if (userChoice.equalsIgnoreCase("F")) {
+            System.out.println("Which playlist would you like to remove songs from? ");
+            printPlaylists();
+            int playlistToRemoveSongsFrom = Integer.valueOf(scanner.nextLine()) - 1;
+            printSongsInPlaylist(listOfPlaylists.get(playlistToRemoveSongsFrom - 1));
+            System.out.println("By number, choose a song to delete");
+            int songToDelete = Integer.valueOf(scanner.nextLine()) - 1;
+            Playlist chosenPlaylist = listOfPlaylists.get(playlistToRemoveSongsFrom);
+            chosenPlaylist.deleteSong(chosenPlaylist.playlist.get(songToDelete));
+
 
         }
 
