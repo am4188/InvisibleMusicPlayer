@@ -9,13 +9,26 @@ public class Interface {
 
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         mainPlaylist = new Playlist("Main Library");
 
+        System.out.println("Hey there, what do you want to do?");
+        mainInterface();
 
+
+    }
+
+    public static void printPlaylist() {
+        System.out.println("********------------------------------------------********");
+        for (Song song : mainPlaylist.playlist) {
+            System.out.println(song);
+        }
+        System.out.println("********------------------------------------------********");
+    }
+
+    public static void mainInterface() {
         while(appOn) {
-            System.out.println("Hey there, what do you want to do?");
+            Scanner scanner = new Scanner(System.in);
             System.out.println("A: Play a song"); // Must ask which song to play and then start song with current time
             System.out.println("B: Add a song to your main library");
             System.out.println("C: Delete a song from your main library");
@@ -49,12 +62,12 @@ public class Interface {
 
             } else if (userChoice.equalsIgnoreCase("C")) {
                 // Delete a song from the library
-                System.out.println("What is the title of the song that you would like to delete? ");
-                String songTitleToDelete = scanner.nextLine();
-                System.out.println("What is the name of the artist? ");
-                String artistToDelete = scanner.nextLine();
+                System.out.println("Choose the number of the song to delete from your main playlist ");
+                Playlist.printSongsInPlaylist(mainPlaylist);
+                int songToDelete = Integer.valueOf(scanner.nextLine()) - 1;
+                mainPlaylist.deleteSong(mainPlaylist.playlist.get(songToDelete));
 
-                mainPlaylist.removeSong(artistToDelete, songTitleToDelete);
+                // mainPlaylist.removeSong(artistToDelete, songTitleToDelete);
             } else if (userChoice.equalsIgnoreCase("D")) {
                 printPlaylist();
 
@@ -68,16 +81,6 @@ public class Interface {
                 appOn = false;
             }
         }
-
-
-    }
-
-    public static void printPlaylist() {
-        System.out.println("********------------------------------------------********");
-        for (Song song : mainPlaylist.playlist) {
-            System.out.println(song);
-        }
-        System.out.println("********------------------------------------------********");
     }
 
 
