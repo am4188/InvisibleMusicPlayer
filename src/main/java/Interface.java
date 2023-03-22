@@ -1,4 +1,5 @@
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,13 +8,28 @@ public class Interface {
     private static boolean appOn = true;
     private static Playlist mainPlaylist;
 
+    public static boolean currentlyPlaying = false;
+
 
     public static void main(String[] args) {
 
         mainPlaylist = new Playlist("Main Library");
+        LocalTime time = LocalTime.now();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("When should I print the time?");
+        String response = scan.nextLine();
+        if (response != null) {
+            System.out.println(time);
+        }
+        System.out.println("When should I print the time again??");
+        String response2 = scan.nextLine();
+        if (response != null) {
+            System.out.println(time);
+        }
 
         System.out.println("Hey there, what do you want to do?");
         mainInterface();
+
 
 
     }
@@ -35,6 +51,9 @@ public class Interface {
             System.out.println("D: View all songs in your main library");
             System.out.println("E: Go to your playlist section");
             System.out.println("F: Turn off the music player");
+            if (currentlyPlaying) {
+                System.out.println("G: See what song is currently playing");
+            }
 
             String userChoice = scanner.nextLine();
 
@@ -79,6 +98,10 @@ public class Interface {
                 System.out.println("Thank you for using Invisible Music Player");
                 System.out.println("******************************************");
                 appOn = false;
+            } else if (userChoice.equalsIgnoreCase("G")) {
+                if (currentlyPlaying) {
+
+                }
             }
         }
     }

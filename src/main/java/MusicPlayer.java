@@ -12,6 +12,16 @@ public class MusicPlayer {
 
     }
 
+    public static void playlistPlaying() {
+        LocalTime startTime = LocalTime.now();
+    }
+
+    public static void songPlaying() {
+        long startTime = System.currentTimeMillis();
+        long currentTime = System.currentTimeMillis();
+        while (startTime + songlength > currenttime )
+    }
+
 
 
 
