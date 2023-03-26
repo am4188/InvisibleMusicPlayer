@@ -31,7 +31,7 @@ public class Song {
     }
 
     public String toString() {
-        return "Artist: " + this.getArtistName() + " | "  + "Title: " + this.getSongTitle() + " | " + "Length: " + this.getSongLength();
+        return "Artist: " + this.getArtistName() + " | "  + "Title: " + this.getSongTitle() + " | " + "Length: " + this.getSongLength().toString().substring(2).toLowerCase();
     }
 
 

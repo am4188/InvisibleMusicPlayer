@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +24,10 @@ public class Playlist {
 
     public void deleteSong(Song song) {
         playlist.remove(song);
+    }
+
+    public String getPlaylistName() {
+        return playlistName;
     }
 
     public void removeSong(String artistName, String songTitle) {
@@ -50,7 +56,16 @@ public class Playlist {
             if (userChoice.equalsIgnoreCase("A")) {
                 System.out.println("Which playlist would you like to listen to? Enter a number");
                 printPlaylists();
-                int playlistToListenTo = Integer.valueOf(scanner.nextLine());
+                int userInput = Integer.valueOf(scanner.nextLine()) - 1;
+                Playlist playlistToListenTo = listOfPlaylists.get(userInput);
+                printSongsInPlaylist(playlistToListenTo);
+                playlistToListenTo.playlistSongPlaying(playlistToListenTo);
+//                if (PLAYLSIT != null) {
+//                    System.out.println("PLAYLIST is currently playing. Here are the songs in PLAYLIST");
+//                    // Print songs in the playlist
+//                    MusicPlayer.playlistSongPlaying();
+//
+//                }
 
             } else if (userChoice.equalsIgnoreCase("B")) {
                 System.out.println("What would you like to call your playlist? ");
@@ -72,15 +87,15 @@ public class Playlist {
             } else if (userChoice.equalsIgnoreCase("E")) {
                 System.out.println("Which playlist would you like to add songs to? ");
                 printPlaylists();
+
                 int playlistToAddSongsTo = Integer.valueOf(scanner.nextLine()) - 1;
-                printSongsInPlaylist(listOfPlaylists.get(playlistToAddSongsTo));
-                System.out.println("By number, choose a song from your main library to add to this playlist: "); // Create an option to add multiple songs at one time if possible
-                Playlist chosenPlaylist = listOfPlaylists.get(playlistToAddSongsTo - 1);
                 Playlist mainPlaylist = listOfPlaylists.get(0);
+                printSongsInPlaylist(mainPlaylist);
+                System.out.println("By number, choose a song from your main library to add to this playlist: "); // Create an option to add multiple songs at one time if possible
+                Playlist chosenPlaylist = listOfPlaylists.get(playlistToAddSongsTo);
                 int songToAdd = Integer.valueOf(scanner.nextLine());
 
                 chosenPlaylist.addSong(mainPlaylist.playlist.get(songToAdd - 1)); // Need to grab the song
-                //Song chosenSong = listOfPlaylists.get(playlistToAddSongsTo - 1).playlist.get(1);
 
             } else if (userChoice.equalsIgnoreCase("F")) {
                 System.out.println("Which playlist would you like to remove songs from? ");
@@ -93,6 +108,12 @@ public class Playlist {
                 chosenPlaylist.deleteSong(chosenPlaylist.playlist.get(songToDelete));
 
             } else if (userChoice.equalsIgnoreCase("G")) {
+                System.out.println("Which playlist would you like to see the length of? ");
+                printPlaylists();
+                int playlistToRemoveSongsFrom = Integer.valueOf(scanner.nextLine()) - 1;
+                getPlaylistTimeLength(listOfPlaylists.get(playlistToRemoveSongsFrom - 1));
+                //exitPlaylist = true;
+            } else {
                 exitPlaylist = true;
             }
 
@@ -117,6 +138,40 @@ public class Playlist {
             counter++;
         }
         System.out.println("----------------------------------------------------");
+    }
+
+    public static void getPlaylistTimeLength(Playlist playlistName) {
+        Duration total = Duration.parse("PT0S");
+        for (Song song : playlistName.playlist) {
+            total = total.plus(song.getSongLength());
+        }
+        System.out.println(total);
+    }
+
+    public List<Song> getPlaylist() {
+        return playlist;
+    }
+
+    public static void playlistSongPlaying(Playlist currentPlaylist) {
+        LocalTime startTime = LocalTime.now();
+        //System.out.println("Enter the time you would like to see which song would be playing: ");
+        //LocalTime timeToCheck = LocalTime.parse(scanner.nextLine());
+        //System.out.println(startTime.until(timeToCheck, ChronoUnit.MINUTES));
+        System.out.println("Enter a time and I will tell you what song will be playing at that time: ");
+        LocalTime timeToFindSongAt = LocalTime.parse(scanner.nextLine());
+
+        LocalTime timePlusLengths = startTime;
+        for (int i = 0; i < currentPlaylist.playlist.size(); i++) {
+            Duration currentSongLength = currentPlaylist.playlist.get(i).getSongLength();
+            timePlusLengths = timePlusLengths.plus(currentSongLength);
+            if (timePlusLengths.isAfter(timeToFindSongAt)) {
+                System.out.println("***********************************************");
+                System.out.println("The song playing at " + timeToFindSongAt + " will be:");
+                System.out.println(currentPlaylist.playlist.get(i).getSongTitle()+ " by " + currentPlaylist.playlist.get(i).getArtistName());
+                System.out.println("***********************************************");
+                break; //+ " by " + currentPlaylist.playlist.get(i).getArtistName() + " will be playing at that time.";
+            }
+        }
     }
 
 

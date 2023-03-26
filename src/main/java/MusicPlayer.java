@@ -1,4 +1,7 @@
+import java.time.Duration;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
 
 public class MusicPlayer {
     private boolean isOn;
@@ -6,21 +9,23 @@ public class MusicPlayer {
     private String artist;
     private String title;
 
+
+    public static Scanner scanner = new Scanner(System.in);
     //display total list of songs (full playlist
 
     public void addSong(Song songToAdd) {
 
     }
 
-    public static void playlistPlaying() {
-        LocalTime startTime = LocalTime.now();
     }
 
-    public static void songPlaying() {
-        long startTime = System.currentTimeMillis();
-        long currentTime = System.currentTimeMillis();
-        while (startTime + songlength > currenttime )
-    }
+//    public static void songPlaying() {
+//        long startTime = System.currentTimeMillis();
+//        long currentTime = System.currentTimeMillis();
+//        while (startTime + songlength > currenttime )
+//    }
+
+
 
 
 
@@ -29,11 +34,11 @@ public class MusicPlayer {
     //Needs: nextSong(), previousSong(), pause(), getter for currentSong, addSong, DeleteSong
     //This might need a clock class to keep track of the time!
 
-    LocalTime currentTime = LocalTime.now();
+
 
 //    public void addSong(Song songToAdd) {
 //        this.
 //    }
 
 
-}
+

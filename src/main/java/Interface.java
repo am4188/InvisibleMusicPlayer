@@ -13,33 +13,16 @@ public class Interface {
 
     public static void main(String[] args) {
 
+
+
         mainPlaylist = new Playlist("Main Library");
-        LocalTime time = LocalTime.now();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("When should I print the time?");
-        String response = scan.nextLine();
-        if (response != null) {
-            System.out.println(time);
-        }
-        System.out.println("When should I print the time again??");
-        String response2 = scan.nextLine();
-        if (response != null) {
-            System.out.println(time);
-        }
+        loadPlaylist();
 
         System.out.println("Hey there, what do you want to do?");
         mainInterface();
 
 
 
-    }
-
-    public static void printPlaylist() {
-        System.out.println("********------------------------------------------********");
-        for (Song song : mainPlaylist.playlist) {
-            System.out.println(song);
-        }
-        System.out.println("********------------------------------------------********");
     }
 
     public static void mainInterface() {
@@ -99,11 +82,32 @@ public class Interface {
                 System.out.println("******************************************");
                 appOn = false;
             } else if (userChoice.equalsIgnoreCase("G")) {
-                if (currentlyPlaying) {
-
-                }
+//                if (currentlyPlaying) {
+//
+//                }
+                Playlist.playlistSongPlaying(mainPlaylist);
             }
         }
+    }
+
+    public static void printPlaylist() {
+        System.out.println("********------------------------------------------********");
+        for (Song song : mainPlaylist.playlist) {
+            System.out.println(song);
+        }
+        System.out.println("********------------------------------------------********");
+    }
+
+    public static void loadPlaylist() {
+        mainPlaylist.addSong(new Song("Welcome Home (Sanitarium)", "Metallica", Duration.parse("PT06M27S")));
+        mainPlaylist.addSong(new Song("N.Y. State of Mind", "Nas", Duration.parse("PT4M54S")));
+        mainPlaylist.addSong(new Song("Powerslave", "Iron Maiden", Duration.parse("PT13M45S")));
+        mainPlaylist.addSong(new Song("Lean On", "Major Lazer & DJ Snake", Duration.parse("PT2M57S")));
+        mainPlaylist.addSong(new Song("Scientist", "Twice", Duration.parse("PT3M14S")));
+        mainPlaylist.addSong(new Song("Stay Gold", "Run the Jewels", Duration.parse("PT3M27S")));
+        mainPlaylist.addSong(new Song("Borderline", "Tame Impala", Duration.parse("PT3M57S")));
+        mainPlaylist.addSong(new Song("Time Wind", "M83", Duration.parse("PT4M09S")));
+        mainPlaylist.addSong(new Song("Swimming Pools (Drank)", "Kendrick Lamar", Duration.parse("PT4M07S")));
     }
 
 
